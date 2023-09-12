@@ -1,0 +1,171 @@
+---
+title: "HW `{lubridate}`"
+author: "Olivia D'Souza"
+date: "`r Sys.Date()`"
+output: html_document
+urlcolor: "blue"
+params:
+  solutions: TRUE
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo       = params$solutions, 
+                      eval       = params$solutions,
+                      fig.align  = "center",
+                      fig.height = 3, 
+                      fig.width  = 5)
+```
+
+# Instructions
+
+- Write your solutions in this starter file. You should modify the 
+  "author" field in the YAML header.
+- Do not modify the paths of any files.
+- Only commit R Markdown and HTML files (no PDF or Word files). Make sure
+  you have knitted to HTML for your final submission.
+- **Make sure to commit each time you answer a question.** Lack of informative
+  and frequent commits will result in point deductions.
+- Only include the necessary code, not any extraneous code, to answer the 
+  questions.
+- Learning objectives:
+    - Date manipulation in R.
+    
+# As Slow as Possible
+    
+The composer [John Cage](https://en.wikipedia.org/wiki/John_Cage) asked his organ piece to be played "as slow as possible", so the [Halberstadt Cathedral](https://en.wikipedia.org/wiki/Halberstadt_Cathedral) started a 639 year continuous performance. Each note in the piece lasts months. The data in "halberstadt.csv" contain the first 71 years of the performance and were taken from [Wikipedia](https://en.wikipedia.org/wiki/As_Slow_as_Possible#Performance). Variables include:
+
+- `Impulse`: The order of the action.
+- `Action`: Either `"Sound"` (for adding a note) or `"Release"` (for stopping a note).
+- `Notes`: The notes being added or stopped.
+- `Date`: The date that the action began.
+- `Length`: The length, in days, of the previous chord.
+    
+1. (1 pt) Read these data into R. Use relative paths (no credit for absolute paths).
+```{r}
+
+library(tidyverse)
+
+cage <- read_csv("../data/halberstadt.csv")
+cage
+
+```
+
+
+    
+2. (1 pt) Use lubridate to convert `Date` to a `Date` object.
+
+```{r}
+library(lubridate)
+cage%>%
+mutate(Date = mdy(Date)) ->cage
+```
+
+
+3. (1 pt) Use lubridate to convert `Length` to a Period.
+
+```{r}
+
+cage%>%
+  mutate(Days = parse_number(Length)) ->cage  # Made days in order to use Lengt (now Days) as dbl for #5
+cage%>%
+  mutate(Length = days(Days)) ->cage
+
+```
+    
+4. (1 pt) Plot the time span of `"E4"` notes by reproducing this plot:
+
+```{r}
+
+cage%>%
+  mutate(Year = year(Date))%>%
+  filter(Notes== str_match_all(Notes,".*E4"))%>%
+  mutate(Action = fct_recode(Action, "On" = "Sound"))%>%
+  mutate(Action = fct_recode(Action, "Off" = "Release"))%>%
+  ggplot() +
+  geom_step(mapping = aes(x = Year, y = Action), group = 1) +
+  ylab("E4") +
+  xlab("Date")
+
+
+  
+```
+
+
+5. (1 pt) What is the average time span (in days) for a chord?
+```{r}
+cage%>%
+ group_by(Notes)%>%
+ summarize(chord_avg = mean(Days)) 
+
+```
+
+
+6. (1 pt) Plot the distribution of time spans (in days) for a chord.
+
+```{r}
+
+  ggplot(data = cage) +
+  geom_histogram(mapping = aes(x= Days), binwidth = 45)+
+  ggtitle("Distribution of Time Spans (in days) for a chord")
+
+
+```
+
+
+7. (1 pt) Are time spans getting longer or shorter or staying about flat the further into the piece? Justify with a plot.
+
+```{r}
+
+cage%>%
+  ggplot() +
+  geom_point(mapping = aes(x = Date, y =(Days))) +
+  geom_smooth(method = lm, se = FALSE, mapping = aes(x = Date, y =(Days)))+
+  ggtitle("Length of Notes as Time & Piece Progresses")+
+  ylab("Length in Days")
+
+  
+```
+
+Time spans seem to be staying about flat as the piece progresses. My plot shows Length in days on the y axis and
+the Date on the x. As the Date progresses further from the start, there is not a significant overall change in Length/time span. This is further supported by the linear regression line I added that shows a very slight negative trend. However, the slope is almost zero, so as the date increases by 1 unit, there is not a significant rise or decline in Length in days/time span.  
+
+8. (1 pt) Create an appropriate plot exploring the distribution of days of the week (e.g. Sunday, Monday, Tuesday, ...) for when actions occur.
+```{r}
+cage%>%
+  mutate(Day = wday(Date, label = TRUE))%>%  #make Day = day of the week with word label, not number
+  ggplot() +
+  geom_bar(mapping = aes(x = Day, fill = Action))+
+  ggtitle("Distribution of Days of Week for When Actions Occur")+
+  ylab("Count of Actions that Occured") +
+  xlab("Day of the Week")
+  
+
+
+```
+
+9. (1 pt) The date is April 24, 2040. The organ of the Halberstadt Cathedral is in ruins after succumbing to organ blight. The organizers have decided to pause the performance for 10 years and resume on April 24, 2050. Create a new column called `NewDate` that contains the updated schedule for the performance. This is what the top and bottom of the data frame should look like:
+
+
+```{r}
+
+# doesn't include first half of dataset, this is just after April 24, 2040
+cage%>%
+  filter(Date >= "2040-04-24")%>%
+  mutate(NewDate = Length)%>%
+  mutate(NewDate = ymd(Date) + years(10)) ->cage_after_date
+
+# before April 24, 2040
+cage%>%
+  filter(Date < "2040-04-24")%>%
+  mutate(NewDate = Length)%>%
+  mutate(NewDate = ymd(Date)) -> cage_before_date
+
+bind_rows(cage_before_date, cage_after_date) ->newCage #combines 2 data frames back into 1
+
+head(newCage)
+tail(newCage) # confirms head and tail match provided data set2
+
+```
+
+
+remember to knit to HTML!!!
