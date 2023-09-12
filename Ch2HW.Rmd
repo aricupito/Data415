@@ -1,0 +1,89 @@
+---
+title: "HW2OliviaD'Souza"
+author: "Olivia D'Souza"
+date: "`r Sys.Date()`"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Question 1 
+Work on Lab 1 if you haven’t done so already. Be sure to read the instructions and the
+sample submissions carefully before you start. You are expected to reproduce most of
+the outputs in Lab 1 by the end of class on Tuesday, Sept 12.
+
+## Question 2
+(This will be in Quiz.) Please review the concept of computing p-values 
+and think about how to find the p-value of a one-sided (aka. one-tailed) test from t
+he p-value of a two-sided (aka. two-tailed) test. Here are some references:
+
+The following questions use the Copier Maintenance data from Problem 1.20 (p.24)
+## Question 3: Problem 2.5 (a, b, c, d) (2 pts)
+
+```{r}
+#read Copier Maintenance data in
+cm <- read.table("ch2dataset.txt", header=F)
+colnames(cm) <- c("time", "copiers")
+head(cm, 3)
+tail(cm, 2)
+```
+
+
+# a. Estimate the change in the mean service time when the number of copiers serviced increases by one. Use a 90 percent confidence interval. Interpret your confidence interval.Part (a) is asking about the slope. (Why?) 
+
+
+```{r}
+
+cm.SLR<-lm(time~copiers, data=cm). #estimated linear regression
+cm.SLR
+summary(cm.SLR) # In order to find the estimated parameter & standard error
+critVal <-qt(.95,43) #finds critcal value based on 90% confidence int
+critVal
+confint(cm.SLR, level=0.90) # confirms my math using R software
+
+
+```
+
+Part A is asking about the slope because it asks for the "change in mean service time (y variable)
+when the number of copiers serviced (x variable) increases by one. This is the definition
+of the slope since you interpret the value as the change in mean y for one unit increase of x. 
+
+Confidence Interval = est. of b1 ± (critical value)*(standard error of b1)
+Confidence Interval =  15.0352 ± (1.681071)*(0.4831)
+  15.0352 + ((1.681071)*(0.4831))
+  15.0352 - ((1.681071)*(0.4831))
+
+Confidence Interval = (14.22307, 15.84733)
+
+
+# b. Conduct a t test to determine whether or not there is a linear association between X and Y here; control the a risk at .10. State the alternatives, decision rule, and conclusion. What is the P-value of your test?
+
+```{r}
+
+```
+
+
+
+#c. Are your results in parts (a) and (b) consistent? Explain.
+
+# d. The manufacturer has suggested that the mean required time should not increase by more than 14 minutes for each additional copier that is serviced on a service call. Conduct a test to decide whether this standard is being satisfied by Tri-City. Control the risk of a Type I error at .05. State the alternatives, decision rule, and conclusion. What is the P-value of the test?
+
+
+
+
+
+
+```{r}
+
+
+```
+
+
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+
