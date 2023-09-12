@@ -1,6 +1,6 @@
 ---
 title: "hw2hopefully"
-author: "Olivia D'Souza"
+author: "Olivia D'Souza, Andrew Ricupito"
 date: "`r Sys.Date()`"
 output: html_document
 ---
