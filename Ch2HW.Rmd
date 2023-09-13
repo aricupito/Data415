@@ -36,10 +36,10 @@ tail(cm, 2)
 
 ```{r}
 
-cm.SLR<-lm(time~copiers, data=cm). #estimated linear regression
+cm.SLR<-lm(time~copiers, data=cm) #estimated linear regression
 cm.SLR
 summary(cm.SLR) # In order to find the estimated parameter & standard error
-critVal <-qt(.95,43) #finds critcal value based on 90% confidence int
+critVal <-qt(.95,43) #finds critical value based on 90% confidence int
 critVal
 confint(cm.SLR, level=0.90) # confirms my math using R software
 
@@ -58,32 +58,85 @@ Confidence Interval =  15.0352 ± (1.681071)*(0.4831)
 Confidence Interval = (14.22307, 15.84733)
 
 
-# b. Conduct a t test to determine whether or not there is a linear association between X and Y here; control the a risk at .10. State the alternatives, decision rule, and conclusion. What is the P-value of your test?
+# b. Conduct a t test to determine whether or not there is a linear association between X and Y here; control the a risk at .10. State the alternatives, decision rule, and conclusion. What is the P-value of your test? In part (b), clearly layout the hypothesis, compute the test-statistic using relevant formula, compute the p-value, and state your conclusion in the context of the problem. Then, use the software output to confirm your results. (Similar requirement to part a)
 
 ```{r}
 
 ```
-
 
 
 #c. Are your results in parts (a) and (b) consistent? Explain.
 
-# d. The manufacturer has suggested that the mean required time should not increase by more than 14 minutes for each additional copier that is serviced on a service call. Conduct a test to decide whether this standard is being satisfied by Tri-City. Control the risk of a Type I error at .05. State the alternatives, decision rule, and conclusion. What is the P-value of the test?
+```{r}
+
+```
 
 
-
-
+# d. The manufacturer has suggested that the mean required time should not increase by more than 14 minutes for each additional copier that is serviced on a service call. Conduct a test to decide whether this standard is being satisfied by Tri-City. Control the risk of a Type I error at .05. State the alternatives, decision rule, and conclusion. What is the P-value of the test? 
+# In part (d), test Ha: beta1 > 14. (Why?) Clearly state the hypothesis, use software to get necessary intermediate results, compute the test-statistic using relevant formula, compute the p-value, and state your conclusion in the context of the problem
 
 
 ```{r}
 
 
 ```
+ 
+## Question 4 (Problem 2.14 a, b)
+# In both part a and b, compute the confidence intervals using relevant formula(s). Follow these steps when “formula-based” computation is requested. First, use software to get the intermediate results, such as the  estimated valuesand their standard errors. Next, plug the intermediate results into the appropriate formula to construct the confidence interval or prediction interval. Then, use software directly to confirm your results. In SPSS, you can save the CI or PI for the predicted y-values to the data table. In R, use function predict() to compute CI or PI for predicted y-values.
+
+# a. 
+```{r}
+
+```
+
+# b.
+```{r}
+
+```
+
+## Question 5 
+Review the example in Lab 1. R users see item 8 in RLab1_SLR.pdf. SPSS users see
+p.6 of Lab1_SLR.pdf. Practice drawing the “confidence interval band” and “prediction
+interval band” on the scatter plot with the regression line. Turn in a graph using Copier
+Maintenance data
+```{r}
+
+```
+
+## Question 6 (Problem 2.24 (b, c, d)) 
+Hint: Refer to the ANOVA table in the output.
+
+# a. 
+```{r}
+
+```
+
+#b.In part b, identify the relevant Sum of Squares from the output. Then verify the computation of the F-test, which is already in the output. Clearly layout the hypothesis, compute the test-statistic using relevant formula, compute the p-value, and statement your conclusion in the context of the problem.
+```{r}
+
+```
+
+
+
+#c.  In part c, use the relevant Sum of Squares from the output to verify the computation. Confirm your result using the summary() output.
+
+```{r}
+
+```
+
 
 
 
 ```{r pressure, echo=FALSE}
 plot(pressure)
 ```
+
+# Question 7
+Refer to the Copier Maintenance data. Learn to read basic output of regression analysis
+from another software. We will use SPSS output in the midterm exam.
+
+# a. R users: Review handout Reading_SPSS_output.pdf. Compare the SPSS output to the R output in Homework 1, 2 and 3, and match the result. 
+
+I have learned how to read basic output for regression analysis in R and SPSS.
 
 
