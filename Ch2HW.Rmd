@@ -128,21 +128,6 @@ Hint: Refer to the ANOVA table in the output.
 
 ```
 
-
-
-#c. In part c, use the relevant Sum of Squares from the output to verify the computation. Confirm your result using the summary() output.
-
-```{r}
-
-```
-
-
-
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
 # Question 7
 Refer to the Copier Maintenance data. Learn to read basic output of regression analysis
 from another software. We will use SPSS output in the midterm exam.
