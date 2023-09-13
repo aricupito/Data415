@@ -61,8 +61,20 @@ Confidence Interval = (14.22307, 15.84733)
 # b. Conduct a t test to determine whether or not there is a linear association between X and Y here; control the a risk at .10. State the alternatives, decision rule, and conclusion. What is the P-value of your test? In part (b), clearly layout the hypothesis, compute the test-statistic using relevant formula, compute the p-value, and state your conclusion in the context of the problem. Then, use the software output to confirm your results. (Similar requirement to part a)
 
 ```{r}
+summary(cm.SLR) #in order to find estimated parameter & standard error of slope
+tobs <- (15.0352 - 0)/(0.4831) # confirmed by summary above
+
 
 ```
+H0: beta1 = 0
+Ha: beta ≠ 0
+T-test statistic = tobs = (b1 - 0)/(standard error of b1)
+T-test statistic = tobs = (15.0352 - 0)/(0.4831) = 31.12233
+
+Since the alternative hypothesis is two sided, the p-value is calculated as: 
+p value = 2 * P(t >|tobs|), where t~t(n-2)
+
+2*pt(31.12233,43) this is totally wrong and not sure what this written out formula wise should be
 
 
 #c. Are your results in parts (a) and (b) consistent? Explain.
@@ -118,7 +130,7 @@ Hint: Refer to the ANOVA table in the output.
 
 
 
-#c.  In part c, use the relevant Sum of Squares from the output to verify the computation. Confirm your result using the summary() output.
+#c. In part c, use the relevant Sum of Squares from the output to verify the computation. Confirm your result using the summary() output.
 
 ```{r}
 
