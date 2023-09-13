@@ -27,7 +27,7 @@ The following questions use the Copier Maintenance data from Problem 1.20 (p.24)
 cm <- read.table("ch2dataset.txt", header=F)
 colnames(cm) <- c("time", "copiers")
 head(cm, 3)
-tail(cm, 2)
+tail(cm, 2) 
 ```
 
 
@@ -56,6 +56,7 @@ Confidence Interval =  15.0352 ± (1.681071)*(0.4831)
   15.0352 - ((1.681071)*(0.4831))
 
 Confidence Interval = (14.22307, 15.84733)
+We are 90% confident that the true slope parameter is between 14.22307 and 15.84733. 
 
 
 # b. Conduct a t test to determine whether or not there is a linear association between X and Y here; control the a risk at .10. State the alternatives, decision rule, and conclusion. What is the P-value of your test? In part (b), clearly layout the hypothesis, compute the test-statistic using relevant formula, compute the p-value, and state your conclusion in the context of the problem. Then, use the software output to confirm your results. (Similar requirement to part a)
@@ -64,6 +65,10 @@ Confidence Interval = (14.22307, 15.84733)
 summary(cm.SLR) #in order to find estimated parameter & standard error of slope
 tobs <- (15.0352 - 0)/(0.4831) # confirmed by summary above
 
+p_value= 2*(pt(q = tobs, df=43,lower.tail=FALSE)) # finding p value for 2 tailed test
+# p-value = 4.013936e-31
+
+summary(cm.SLR) # software output to confirm our results
 
 ```
 H0: beta1 = 0
@@ -72,26 +77,46 @@ T-test statistic = tobs = (b1 - 0)/(standard error of b1)
 T-test statistic = tobs = (15.0352 - 0)/(0.4831) = 31.12233
 
 Since the alternative hypothesis is two sided, the p-value is calculated as: 
-p value = 2 * P(t >|tobs|), where t~t(n-2)
+p value = 2 *P(t >|tobs|), where t~t(n-2) 
+p value = 4.013936e-31
 
-2*pt(31.12233,43) this is totally wrong and not sure what this written out formula wise should be
+At the significance level of alpha = .1, the resulting p-value (4.013936e-31) is smaller than alpha. Therefore, we reject the null hypothesis. The data provides significance evidence that there is a change in slope between copiers and time, or that there is a linear association. 
 
+Software output confirms that the t-statistic value for the test = 31.123 and a p-value of 2e-16. We can reject the null because the p-value is significantly lower than any possible alpha, especially .1. There is evidence to suggest that there is a change in slope between copiers and time, or that there is a linear association. 
 
 #c. Are your results in parts (a) and (b) consistent? Explain.
 
-```{r}
-
-```
-
+Yes, from the condfidence interval in part a, we learned that we are 90% confident that the true slope parameter is between 14.22307 and 15.84733. Additionally, in part b, we rejected the null hypothesis (that slope = 0, or no linear association) because p value < alpha, which suggested there was evidence that there was a linear association. These results are consistent because the confidence interval does not include 0, which would signify 
+no linear association. 
 
 # d. The manufacturer has suggested that the mean required time should not increase by more than 14 minutes for each additional copier that is serviced on a service call. Conduct a test to decide whether this standard is being satisfied by Tri-City. Control the risk of a Type I error at .05. State the alternatives, decision rule, and conclusion. What is the P-value of the test? 
+
 # In part (d), test Ha: beta1 > 14. (Why?) Clearly state the hypothesis, use software to get necessary intermediate results, compute the test-statistic using relevant formula, compute the p-value, and state your conclusion in the context of the problem
 
 
 ```{r}
+summary(cm.SLR) #in order to find estimated parameter & standard error of slope
+tobs <- (15.0352 - 14)/(0.4831) #tobs = 2.142828
+
+p_value= 1 - (pt(q = tobs, df=43)) # finding p value for 1 tailed test (right tail)
+# p-value = 0.0189143
 
 
 ```
+ 
+ H0: b1 = 14
+ Ha: b1 >14  (because we are looking to see if mean required time increases by more than 14 min for each additional copier that is serviced on a service call)
+ 
+T-test statistic = tobs = (b1 - 14)/(standard error of b1)
+T-test statistic = tobs = (15.0352 - 14)/(0.4831) = 2.142828
+
+Since the alternative hypothesis is 1 sided, the p-value is calculated as: 
+p value = P(t > tobs), where t~t(n-2) 
+p value = 0.0189143
+
+At the significance level of alpha = .05, the resulting p-value (0.0189143) is smaller than alpha. Therefore, we  reject the null hypothesis. The data provides significance evidence that the tmean required time increases by more than 14 minutes for each additional copier that is serviced on a service call, which means TriCity is not satisfying their standard.
+
+ 
  
 ## Question 4 (Problem 2.14 a, b)
 # In both part a and b, compute the confidence intervals using relevant formula(s). Follow these steps when “formula-based” computation is requested. First, use software to get the intermediate results, such as the  estimated valuesand their standard errors. Next, plug the intermediate results into the appropriate formula to construct the confidence interval or prediction interval. Then, use software directly to confirm your results. In SPSS, you can save the CI or PI for the predicted y-values to the data table. In R, use function predict() to compute CI or PI for predicted y-values.
@@ -112,6 +137,17 @@ p.6 of Lab1_SLR.pdf. Practice drawing the “confidence interval band” and “
 interval band” on the scatter plot with the regression line. Turn in a graph using Copier
 Maintenance data
 ```{r}
+
+plot(time~copiers, data=cm, ylim=c(0, 170), pch=20)
+abline(cm.SLR$coef)
+newx<-seq(0, 12, by=2) #sets up a grid of x values by creating x val sequence by increment 2 
+cm.CI<-predict(cm.SLR, newdata=data.frame(copiers=newx), interval="confidence", leve=0.95) #create CI
+cm.PI<-predict(cm.SLR, newdata=data.frame(copiers=newx), interval="prediction", leve=0.95) #create PI
+lines(newx, cm.CI[,2], lty=2, col=2) #plot x against second column saved from predictor function, lower
+lines(newx, cm.CI[,3], lty=2, col=2) #plot x against second column saved from predictor function, upper
+lines(newx, cm.PI[,2], lty=3, col=3, lwd=3)
+lines(newx, cm.PI[,3], lty=3, col=3, lwd=3)
+
 
 ```
 
