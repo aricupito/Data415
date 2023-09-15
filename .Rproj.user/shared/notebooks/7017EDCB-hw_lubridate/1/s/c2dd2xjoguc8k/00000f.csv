@@ -1,9 +1,0 @@
-"0","cage%>%
-  ggplot() +
-  geom_point(mapping = aes(x = Date, y =(Days))) +
-  geom_smooth(method = lm, se = FALSE, mapping = aes(x = Date, y =(Days)))+
-  ggtitle(""Length of Notes as Time & Piece Progresses"")+
-  ylab(""Length in Days"")
-"
-"2","Error in cage %>% ggplot() : could not find function ""%>%""
-"
