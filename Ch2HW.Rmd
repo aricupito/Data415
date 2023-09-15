@@ -76,7 +76,9 @@ T-test statistic = tobs = (b1 - 0)/(standard error of b1)
 T-test statistic = tobs = (15.0352 - 0)/(0.4831) = 31.12233
 
 Since the alternative hypothesis is two sided, the p-value is calculated as: 
-p value = 2 *P(t >|tobs|), where t~t(n-2) 
+
+p value = 2 *P(t df >|tobs|), where df = n-2
+df = 43, tobs = 31.12233 
 p value = 4.013936e-31
 
 At the significance level of alpha = .1, the resulting p-value (4.013936e-31) is smaller than alpha. Therefore, we reject the null hypothesis. The data provides significance evidence that there is a change in slope between copiers and time, or that there is a linear association. 
@@ -151,11 +153,16 @@ lines(newx, cm.CI[,2], lty=2, col=2) #plot x against second column saved from pr
 lines(newx, cm.CI[,3], lty=2, col=2) #plot x against second column saved from predictor function, upper
 lines(newx, cm.PI[,2], lty=3, col=3, lwd=3)
 lines(newx, cm.PI[,3], lty=3, col=3, lwd=3)
+<<<<<<< HEAD
+=======
+
+>>>>>>> a0315b3 (TA is my new bff here's the update)
 ```
 
 ## Question 6 (Problem 2.24 (b, c, d)) 
 Hint: Refer to the ANOVA table in the output.
 
+<<<<<<< HEAD
 # a. 
 Finding Data 
 Creating Tables
@@ -199,6 +206,8 @@ cm.aov <- data.frame(Source_of_Variation=Source_of_Variation, SS=SS, df=df, MS=M
 cm.aov
 ```
 
+=======
+>>>>>>> a0315b3 (TA is my new bff here's the update)
 #b.In part b, identify the relevant Sum of Squares from the output. Then verify the computation of the F-test, which is already in the output. Clearly layout the hypothesis, compute the test-statistic using relevant formula, compute the p-value, and statement your conclusion in the context of the problem.
 ```{r}
 
